@@ -6,6 +6,12 @@ class Phylum < Formula
   license "GPL-3.0-or-later"
   head "https://github.com/phylum-dev/cli.git", branch: "main"
 
+  bottle do
+    root_url "https://github.com/phylum-dev/homebrew-cli/releases/download/phylum-3.12.1"
+    sha256 cellar: :any_skip_relocation, monterey:     "cdfc6810f99b11b680115e89af4eb4044f19bbd7adf943bfd000203b66320301"
+    sha256                               x86_64_linux: "a09a307592f3c3b6e83ecaf09d5e4a7769d659b5e9009de49697d934ad29831d"
+  end
+
   depends_on "rust" => :build
 
   def install
