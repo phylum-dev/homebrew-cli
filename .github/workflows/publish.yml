@@ -23,7 +23,7 @@ jobs:
       - run: brew test-bot --only-formulae
 
       - name: Upload bottles as artifact
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v3
         with:
           name: bottles
           path: '*.bottle.*'
@@ -64,8 +64,7 @@ jobs:
         run: brew bottle --merge --write --debug *.bottle.json
 
       - name: Push commits
-        run: |
-          git push
+        run: git push
 
   publish-bottles:
     runs-on: ubuntu-latest
