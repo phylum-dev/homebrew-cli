@@ -33,19 +33,7 @@ jobs:
     needs: build-bottles
     steps:
       - name: Set up Homebrew
-        run: |
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-          echo "$(brew --prefix)/bin" >> $GITHUB_PATH
-
-          HOMEBREW_TAP_REPOSITORY="$(brew --repo "$GITHUB_REPOSITORY")"
-          if [[ -d "$HOMEBREW_TAP_REPOSITORY" ]]; then
-              rm -rf "$HOMEBREW_TAP_REPOSITORY"
-          fi
-          mkdir -vp "$HOMEBREW_TAP_REPOSITORY"
-
-          rm -rf "$GITHUB_WORKSPACE"
-          ln -vs "$HOMEBREW_TAP_REPOSITORY" "$GITHUB_WORKSPACE"
+        uses: Homebrew/actions/setup-homebrew@master
 
       - name: Checkout the repository
         uses: actions/checkout@v3
