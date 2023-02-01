@@ -46,7 +46,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Set up git
-        uses: Homebrew/actions/git-user-config@449449e64aaa5faac0d24229a2ffba32438e4b63
+        uses: Homebrew/actions/git-user-config@master
 
       - name: Download bottle artifacts
         uses: actions/download-artifact@v3
