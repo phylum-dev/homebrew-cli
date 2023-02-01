@@ -4,6 +4,12 @@ on:
     paths:
       - Formula/*.rb
 
+env:
+  # Despite the name, this environment variable needs a non-zero length
+  # value to be set for all OS types in the matrix in order to avoid errors.
+  # Unfortunately, this variable and it's use is not documented.
+  GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED: 1
+
 jobs:
   build-bottles:
     strategy:
@@ -16,8 +22,6 @@ jobs:
     steps:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
-        with:
-          debug: true
 
       - run: brew test-bot --only-cleanup-before
 
