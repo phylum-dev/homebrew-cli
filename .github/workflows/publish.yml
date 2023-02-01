@@ -20,18 +20,15 @@ jobs:
           - [self-hosted, macos, arm64]
     runs-on: ${{ matrix.os }}
     steps:
-      - run: |
-          env
-          which brew
+      - run: env
 
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
         with:
           debug: true
 
-      - run: |
-          env
-          which brew
+      - run: env
+      - run: which brew
 
       - run: brew test-bot --only-cleanup-before
 
