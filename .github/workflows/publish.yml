@@ -4,6 +4,12 @@ on:
     paths:
       - Formula/*.rb
 
+env:
+  # This environment variable is not documented, but is needed to
+  # prevent failures and destructive actions added in this commit:
+  # https://github.com/Homebrew/actions/commit/616a563beaa0715ddebbb39a331224af1b46fdaa
+  GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED: 1
+
 jobs:
   build-bottles:
     strategy:
