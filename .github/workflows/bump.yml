@@ -1,0 +1,57 @@
+# This is a workflow for bumping the CLI version references in the Formula and creating a PR with the changes.
+#
+# It is configured to be triggered by repository dispatch events which come from outside of this repository.
+# It requires write access to the repository by providing a personal access token (PAT) with `repo` scope.
+#
+# The `event_type` parameter is expected to be `trigger-bump-formula-pr`.
+# The `client_payload` parameter is expected to contain the following data:
+#   * `CLI_version`: a string containing the Phylum CLI version to include
+#                    in the formula, with or without the leading `v` (e.g., v4.7.0)
+#
+# Here is an example repository dispatch event, triggered with `curl` from the command line:
+#
+# curl \
+#   -X POST \
+#   --fail-with-body \
+#   -H "Accept: application/vnd.github+json" \
+#   -H "X-GitHub-Api-Version: 2022-11-28" \
+#   -H "Authorization: token <PAT>" \
+#   -d '{"event_type":"trigger-bump-formula-pr","client_payload":{"CLI_version":"v4.7.0"}}' \
+#   https://api.github.com/repos/phylum-dev/homebrew-cli/dispatches
+#
+# References:
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#repository_dispatch
+# https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event
+---
+name: Bump Formula and Create PR
+
+on:
+  repository_dispatch:
+    types: [trigger-bump-formula-pr]
+
+jobs:
+  bump:
+    name: Bump Formula and create PR
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Set up Homebrew
+        # NOTE: A specific commit is used here b/c this action does not
+        #       publish tags and the current `master` appears to be broken.
+        uses: Homebrew/actions/setup-homebrew@449449e64aaa5faac0d24229a2ffba32438e4b63
+
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Set up git
+        uses: Homebrew/actions/git-user-config@master
+
+      - name: Create a PR with new formula URL and SHA
+        env:
+          HOMEBREW_DEVELOPER: "1"
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          CLI_VER_WITHOUT_v=$(echo ${{ github.event.client_payload.CLI_version }} | sed 's/v//')
+          brew bump-formula-pr --version $CLI_VER_WITHOUT_v --no-fork --no-browse --debug --verbose phylum
