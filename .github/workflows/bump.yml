@@ -33,12 +33,9 @@ jobs:
   bump:
     name: Bump Formula and create PR
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
     steps:
       - name: Set up Homebrew
-        # NOTE: A specific commit is used here b/c this action does not
+        # NOTE: A specific commit is used here because this action does not
         #       publish tags and the current `master` appears to be broken.
         uses: Homebrew/actions/setup-homebrew@449449e64aaa5faac0d24229a2ffba32438e4b63
 
