@@ -51,4 +51,4 @@ jobs:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           CLI_VER_WITHOUT_v=$(echo ${{ github.event.client_payload.CLI_version }} | sed 's/v//')
-          brew bump-formula-pr --version $CLI_VER_WITHOUT_v --no-fork --no-browse --debug --verbose phylum
+          brew bump-formula-pr --version $CLI_VER_WITHOUT_v --no-fork --no-browse --no-audit --debug --verbose phylum
