@@ -50,7 +50,7 @@ jobs:
           HOMEBREW_DEVELOPER: "1"
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git remote set-url origin git@github.com:"$GITHUB_REPOSITORY".git
+          git remote set-url origin git@github.com:"$GITHUB_REPOSITORY"
           CLI_VER_WITHOUT_v=$(echo ${{ github.event.client_payload.CLI_version }} | sed 's/v//')
-          printf "CLI_VER_WITHOUT_v: %s" "$CLI_VER_WITHOUT_v"
+          printf "CLI_VER_WITHOUT_v: %s\n" "$CLI_VER_WITHOUT_v"
           brew bump-formula-pr --version "$CLI_VER_WITHOUT_v" --no-fork --no-browse --no-audit --debug --verbose phylum
