@@ -36,19 +36,27 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+        with:
+          # This PAT is for the `phylum-bot` account and only has the `public_repo` scope to limit privileges.
+          token: ${{ secrets.GH_RELEASE_PAT }}
 
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
         with:
           debug: true
+          # This PAT is for the `phylum-bot` account and only has the `public_repo` scope to limit privileges.
+          token: ${{ secrets.GH_RELEASE_PAT }}
 
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
+        with:
+          # This PAT is for the `phylum-bot` account and only has the `public_repo` scope to limit privileges.
+          token: ${{ secrets.GH_RELEASE_PAT }}
 
       - name: Create a PR with new formula URL and SHA
         env:
           HOMEBREW_DEVELOPER: "1"
-          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GH_RELEASE_PAT }}
         run: |
           git remote set-url origin git@github.com:"$GITHUB_REPOSITORY"
           CLI_VER_WITHOUT_v=$(echo ${{ github.event.client_payload.CLI_version }} | sed 's/v//')
