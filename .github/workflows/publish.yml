@@ -54,7 +54,7 @@ jobs:
           name: bottles
 
       - name: Merge bottles
-        run: brew bottle --merge --write --debug *.bottle.json
+        run: brew bottle --merge --write --debug ./*.bottle.json
 
       - name: Push commits
         run: git push
