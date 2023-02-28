@@ -34,13 +34,15 @@ jobs:
     name: Bump Formula and create PR
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
       - name: Set up Homebrew
         # NOTE: A specific commit is used here because this action does not
         #       publish tags and the current `master` appears to be broken.
         uses: Homebrew/actions/setup-homebrew@449449e64aaa5faac0d24229a2ffba32438e4b63
-
-      - name: Checkout the repository
-        uses: actions/checkout@v3
+        with:
+          debug: true
 
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
