@@ -40,16 +40,19 @@ jobs:
           # This PAT is for the `phylum-bot` account and only has the `public_repo` scope to limit privileges.
           token: ${{ secrets.GH_RELEASE_PAT }}
 
+      # This GPG key is for the `phylum-bot` account and used in order to ensure commits are signed/verified
+      - name: Import GPG key for bot account
+        uses: crazy-max/ghaction-import-gpg@v5
+        with:
+          gpg_private_key: ${{ secrets.PHYLUM_BOT_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.PHYLUM_BOT_GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
         with:
           debug: true
-          # This PAT is for the `phylum-bot` account and only has the `public_repo` scope to limit privileges.
-          token: ${{ secrets.GH_RELEASE_PAT }}
-
-      - name: Set up git
-        uses: Homebrew/actions/git-user-config@master
-        with:
           # This PAT is for the `phylum-bot` account and only has the `public_repo` scope to limit privileges.
           token: ${{ secrets.GH_RELEASE_PAT }}
 
@@ -58,7 +61,7 @@ jobs:
           HOMEBREW_DEVELOPER: "1"
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GH_RELEASE_PAT }}
         run: |
-          git remote set-url origin git@github.com:"$GITHUB_REPOSITORY"
+          git remote set-url origin git@github.com:"$GITHUB_REPOSITORY".git
           CLI_VER_WITHOUT_v=$(echo ${{ github.event.client_payload.CLI_version }} | sed 's/v//')
           printf "CLI_VER_WITHOUT_v: %s\n" "$CLI_VER_WITHOUT_v"
           brew bump-formula-pr --version "$CLI_VER_WITHOUT_v" --no-fork --no-browse --no-audit --debug --verbose phylum
