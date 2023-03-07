@@ -69,12 +69,16 @@ jobs:
           # This PAT is for the `phylum-bot` account and only has the `public_repo` scope to limit privileges.
           github-token: ${{ secrets.GH_RELEASE_PAT }}
           script: |
+            var cli_ver_no_v = process.env.CLI_VER;
+            while (cli_ver_no_v.charAt(0) === 'v'){
+              cli_ver_no_v = cli_ver_no_v.substring(1);
+            }
             const response = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              head: "bump-phylum-${CLI_VER#v}",
+              head: "bump-phylum-" + cli_ver_no_v,
               base: context.ref,
-              title: "phylum ${CLI_VER#v}",
+              title: "phylum " + cli_ver_no_v,
               body: "Reminder: It is better to wait for the first 4 jobs "
                   + "(3 for `build-bottles` and 1 for `brew-bottle`) to "
                   + "complete before approving this PR because the PR will "
