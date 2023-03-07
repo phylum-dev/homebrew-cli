@@ -57,8 +57,8 @@ jobs:
         run: |
           curl -sSfLO "https://github.com/phylum-dev/cli/archive/refs/tags/${CLI_VER}.tar.gz"
           TARBALL_SHA=$(sha256sum "${CLI_VER}.tar.gz" | cut -d' ' -f1)
-          sed -E -i '' "/^  url /s/\/v.*.tar.gz/\/${CLI_VER}.tar.gz/" Formula/phylum.rb
-          sed -E -i '' "/^  sha256 /s/.*/  sha256 \"${TARBALL_SHA}\"/" Formula/phylum.rb
+          sed -E -i'.bak' "/^  url /s/\/v.*.tar.gz/\/${CLI_VER}.tar.gz/" Formula/phylum.rb
+          sed -E -i'.bak' "/^  sha256 /s/.*/  sha256 \"${TARBALL_SHA}\"/" Formula/phylum.rb
           git add Formula/phylum.rb
           git commit -m "phylum ${CLI_VER#v}"
           git push --force origin "HEAD:bump-phylum-${CLI_VER#v}"
