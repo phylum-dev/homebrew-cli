@@ -49,16 +49,14 @@ jobs:
           git_commit_gpgsign: true
 
       - name: Update URL and SHA256 values
-        id: commit
-        continue-on-error: true
         # NOTE: The `archive/refs/tags` link is used instead of the `tarball_url` provided by the release API because
         #       the hashes between the two are (currently) different, even though the extracted contents are the same.
         #       The `archive/refs/tags` link format is used by the formula and is therefore the one downloaded here.
         #       Reference: https://github.com/community/community/discussions/45830
         # NOTE: The git user name/email used for commits is already configured, by crazy-max/ghaction-import-gpg action.
         run: |
-          curl -sSfLo "cli-${CLI_VER#v}.tar.gz" "https://github.com/phylum-dev/cli/archive/refs/tags/${CLI_VER}.tar.gz"
-          TARBALL_SHA=$(sha256sum "cli-${CLI_VER#v}.tar.gz" | cut -d' ' -f1)
+          curl -sSfLO "https://github.com/phylum-dev/cli/archive/refs/tags/${CLI_VER}.tar.gz"
+          TARBALL_SHA=$(sha256sum "${CLI_VER}.tar.gz" | cut -d' ' -f1)
           sed -E -i '' "/^  url /s/\/v.*.tar.gz/\/${CLI_VER}.tar.gz/" Formula/phylum.rb
           sed -E -i '' "/^  sha256 /s/.*/  sha256 \"${TARBALL_SHA}\"/" Formula/phylum.rb
           git add Formula/phylum.rb
@@ -66,7 +64,6 @@ jobs:
           git push --force origin "HEAD:bump-phylum-${CLI_VER#v}"
 
       - name: Create Pull Request
-        if: ${{ steps.commit.outcome == 'success' }}
         uses: actions/github-script@v6
         with:
           # This PAT is for the `phylum-bot` account and only has the `public_repo` scope to limit privileges.
@@ -78,6 +75,12 @@ jobs:
               head: "bump-phylum-${CLI_VER#v}",
               base: context.ref,
               title: "phylum ${CLI_VER#v}",
-              body: "Wait for a new commit to be automatically added by first set of jobs _before_ approving this PR.",
+              body: "Reminder: It is better to wait for the first 4 jobs "
+                  + "(3 for `build-bottles` and 1 for `brew-bottle`) to "
+                  + "complete before approving this PR because the PR will "
+                  + "be updated by that 4th job with a new commit that updates "
+                  + "the formula to include the new bottle `root_url` and `sha256` "
+                  + "values. Additionally, this PR should not be merged to `main` "
+                  + "until _after_ the bottles have been successfully published.",
             });
             console.log(response);
