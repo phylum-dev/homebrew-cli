@@ -14,10 +14,17 @@ jobs:
           - [self-hosted, macos, arm64]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Set environment
+        if: contains(${{ matrix.os }}, 'self-hosted')
+        # This environment variable is not documented, but is needed to
+        # prevent failures and destructive actions added in this commit:
+        # https://github.com/Homebrew/actions/commit/616a563beaa0715ddebbb39a331224af1b46fdaa
+        run: echo "GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED=1" >> $GITHUB_ENV
+
       - name: Set up Homebrew
-        # NOTE: A specific commit is used here b/c this action does not
-        #       publish tags and the current `master` appears to be broken.
-        uses: Homebrew/actions/setup-homebrew@449449e64aaa5faac0d24229a2ffba32438e4b63
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          debug: true
 
       - run: brew test-bot --only-cleanup-before
 
@@ -38,7 +45,9 @@ jobs:
     needs: build-bottles
     steps:
       - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@449449e64aaa5faac0d24229a2ffba32438e4b63
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          debug: true
 
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -65,7 +74,9 @@ jobs:
     environment: release
     steps:
       - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@449449e64aaa5faac0d24229a2ffba32438e4b63
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          debug: true
 
       - name: Download bottle artifacts
         uses: actions/download-artifact@v3
