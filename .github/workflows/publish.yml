@@ -11,15 +11,17 @@ jobs:
         os:
           - ubuntu-20.04
           - macos-latest
-          - [self-hosted, macos, arm64]
+        include:
+          - os: [self-hosted, macos, arm64]
+            self_hosted: true
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set environment
-        if: contains(${{ matrix.os }}, 'self-hosted')
+        if: ${{ matrix.self_hosted }}
         # This environment variable is not documented, but is needed to
         # prevent failures and destructive actions added in this commit:
         # https://github.com/Homebrew/actions/commit/616a563beaa0715ddebbb39a331224af1b46fdaa
-        run: echo "GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED=1" >> $GITHUB_ENV
+        run: echo "GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED=1" >> "$GITHUB_ENV"
 
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
