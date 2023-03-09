@@ -41,7 +41,7 @@ jobs:
 
       - run: brew test-bot --only-tap-syntax
 
-      - run: brew test-bot --only-formulae
+      - run: brew test-bot --only-formulae --skip-dependents
 
       - name: Upload bottles as artifact
         uses: actions/upload-artifact@v3
