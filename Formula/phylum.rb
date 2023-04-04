@@ -1,8 +1,8 @@
 class Phylum < Formula
   desc "Software Supply Chain Security CLI"
   homepage "https://phylum.io"
-  url "https://github.com/phylum-dev/cli/archive/refs/tags/v4.7.0.tar.gz"
-  sha256 "0c4ffca800d461db2e935e6308ce336e24679dd5518689d8f0ecaba4f1f88946"
+  url "https://github.com/phylum-dev/cli/archive/refs/tags/v4.8.0.tar.gz"
+  sha256 "3ee9a92951278c75ae998fb65617ca1f7448983e78e1aecdb0c459a06eb53064"
   license "GPL-3.0-or-later"
   head "https://github.com/phylum-dev/cli.git", branch: "main"
 
