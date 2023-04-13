@@ -8,8 +8,8 @@ class Phylum < Formula
 
   bottle do
     root_url "https://github.com/phylum-dev/homebrew-cli/releases/download/phylum-5.0.0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "daafd41261909f2ff9ab0f55633e43e161c2098c76d819d3a9ff2ba92c3475f1"
-    sha256 cellar: :any_skip_relocation, monterey:       "a68f25376d8a00bee792d4cf70f51e81b3f71fa363181d36713cdc3f4757db2b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d72bc2365303072e0bf56c53dacafe76dd6127e485b10a9faad70affd77c373a"
+    sha256 cellar: :any_skip_relocation, monterey:       "fd0816edef0f6bb91f36f2a335bde98ab7da1ba416adfeab3b03f1982d29806c"
   end
 
   depends_on "rust" => :build
