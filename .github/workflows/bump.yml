@@ -79,10 +79,10 @@ jobs:
               head: "bump-phylum-" + cli_ver_no_v,
               base: context.ref,
               title: "phylum " + cli_ver_no_v,
-              body: "Reminder: It is better to wait for the first 4 jobs "
-                  + "(3 for `build-bottles` and 1 for `brew-bottle`) to "
+              body: "Reminder: It is better to wait for the first 3 jobs "
+                  + "(2 for `build-bottles` and 1 for `brew-bottle`) to "
                   + "complete before approving this PR because the PR will "
-                  + "be updated by that 4th job with a new commit that updates "
+                  + "be updated by that `brew-bottle` job with a new commit that updates "
                   + "the formula to include the new bottle `root_url` and `sha256` "
                   + "values. Additionally, this PR should not be merged to `main` "
                   + "until _after_ the bottles have been successfully published.",

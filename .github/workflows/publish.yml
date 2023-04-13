@@ -27,6 +27,8 @@ jobs:
         with:
           debug: true
 
+      - run: brew update
+
       - run: brew test-bot --only-cleanup-before
 
       - run: brew test-bot --only-setup
