@@ -7,9 +7,9 @@ class Phylum < Formula
   head "https://github.com/phylum-dev/cli.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/phylum-dev/homebrew-cli/releases/download/phylum-5.0.1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "410f34a6be6aba064db40a6d604106fcf637bd35842ada3db30a1fdfbf0b873a"
-    sha256 cellar: :any_skip_relocation, monterey:       "900d85aabaedb6b8380c6682fe93ba728edac0d15c61731272445b470c1a48e0"
+    root_url "https://github.com/phylum-dev/homebrew-cli/releases/download/phylum-5.1.0"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "438998859829f6e604d807b1769383f640256c46c09fdbfad9832416338708d5"
+    sha256 cellar: :any_skip_relocation, monterey:       "e7580011a3df076e19dd341ae3135a190117c625e44312d9841397051c79606a"
   end
 
   depends_on "rust" => :build
