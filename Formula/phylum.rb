@@ -23,6 +23,14 @@ class Phylum < Formula
     fish_completion.install "target/completions/phylum.fish"
   end
 
+  def caveats
+    <<~EOS
+      No official extensions have been installed. For a list of official extensions
+      with installation instructions, see:
+        https://github.com/phylum-dev/cli/tree/main/extensions
+    EOS
+  end
+
   test do
     system "#{bin}/phylum", "version"
   end
