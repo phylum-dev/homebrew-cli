@@ -2,14 +2,15 @@ name: Publish Bottles
 on:
   pull_request:
     paths:
-      - Formula/*.rb
+      - Formula/phylum.rb
 
 jobs:
   build-bottles:
     strategy:
       matrix:
         os:
-          - macos-latest
+          - macos-12
+          - macos-13
         include:
           - os: [self-hosted, macos, arm64]
             self_hosted: true
@@ -29,13 +30,16 @@ jobs:
 
       - run: brew update
 
-      - run: brew test-bot --only-cleanup-before
+      - run: brew uninstall -f phylum || true
 
-      - run: brew test-bot --only-setup
+      - run: brew install --include-test --build-bottle phylum
 
-      - run: brew test-bot --only-tap-syntax
+      - run: brew test phylum
 
-      - run: brew test-bot --only-formulae
+      - name: brew bottle
+        run: |
+          VERSION=$(brew list --versions phylum | cut "-d " -f2)
+          brew bottle --json --root-url "https://github.com/phylum-dev/homebrew-cli/releases/download/phylum-$VERSION" phylum
 
       - name: Upload bottles as artifact
         uses: actions/upload-artifact@v3
