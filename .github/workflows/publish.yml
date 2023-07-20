@@ -9,7 +9,8 @@ jobs:
     strategy:
       matrix:
         os:
-          - macos-latest
+          - macos-12
+          - macos-13
         include:
           - os: [self-hosted, macos, arm64]
             self_hosted: true
