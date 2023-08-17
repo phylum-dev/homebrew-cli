@@ -18,7 +18,7 @@ class Phylum < Formula
   def install
     system "cargo", "install", "--no-default-features", *std_cargo_args(path: "cli")
 
-    system "cargo", "run", "--package", "xtask", "gencomp"
+    system "cargo", "run", "--package", "xtask", "--no-default-features", "gencomp"
     bash_completion.install "target/completions/phylum.bash"
     zsh_completion.install "target/completions/_phylum"
     fish_completion.install "target/completions/phylum.fish"
