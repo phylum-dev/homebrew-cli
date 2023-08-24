@@ -1,16 +1,16 @@
 class Phylum < Formula
   desc "Software Supply Chain Security CLI"
   homepage "https://phylum.io"
-  url "https://github.com/phylum-dev/cli/archive/refs/tags/v5.6.0.tar.gz"
-  sha256 "e1a06ec78d35c3b607e8f6368fa47b75f02118e22762f431730dc991e9ddcde4"
+  url "https://github.com/phylum-dev/cli/archive/refs/tags/v5.7.0.tar.gz"
+  sha256 "cf3a864ea9cffd26d9db316bcbde6b6b27c446f7b907a479abe721a4c2681cbe"
   license "GPL-3.0-or-later"
   head "https://github.com/phylum-dev/cli.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/phylum-dev/homebrew-cli/releases/download/phylum-5.6.0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "dddc7b899784eda325247769447128360726d2d96f43994524cc7f975e3ac37d"
-    sha256 cellar: :any_skip_relocation, ventura:       "e94ce94dbef79270635498280608b973217b3a2eec39f398cfa9a6e657406358"
-    sha256 cellar: :any_skip_relocation, monterey:      "7450beda7cf506be5db776f0c12872985fa4ec466e3965851a8c439e89270155"
+    root_url "https://github.com/phylum-dev/homebrew-cli/releases/download/phylum-5.7.0"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4b25d8f0c12693ef41be7b2ec3c842a3a543f6f1e13e874ab13b6116917c150c"
+    sha256 cellar: :any_skip_relocation, ventura:       "d37e5b302e3299b671f82eda12173291ebcd9b1c4276c3f875308d7e570efab2"
+    sha256 cellar: :any_skip_relocation, monterey:      "4bdbd2ab85e144cbe94ef17bfb71b7f99f5eebbc543a7e0deed9c77e37e61da7"
   end
 
   depends_on "rust" => :build
