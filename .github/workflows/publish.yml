@@ -16,19 +16,21 @@ jobs:
             self_hosted: true
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Set environment
-        if: ${{ matrix.self_hosted }}
-        # This environment variable is not documented, but is needed to
-        # prevent failures and destructive actions added in this commit:
-        # https://github.com/Homebrew/actions/commit/616a563beaa0715ddebbb39a331224af1b46fdaa
-        run: echo "GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED=1" >> "$GITHUB_ENV"
+      - name: Checkout the repository
+        uses: actions/checkout@v3
 
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-        with:
-          debug: true
+      - name: Setup environment
+        run: |
+          echo "HOMEBREW_NO_AUTO_UPDATE=1" >> "$GITHUB_ENV"
+          echo "HOMEBREW_NO_INSTALL_FROM_API=1" >> "$GITHUB_ENV"
+          echo "HOMEBREW_VERBOSE=1" >> "$GITHUB_ENV"
+          echo "HOMEBREW_DEBUG=1" >> "$GITHUB_ENV"
+          brew untap -f phylum-dev/cli || true
+          TAP_DIR=$(brew --repo phylum-dev/cli)
+          mkdir -vp $(dirname $TAP_DIR)
+          ln -vs $GITHUB_WORKSPACE $TAP_DIR
 
-      - run: brew update
+      - run: brew config
 
       - run: brew uninstall -f phylum || true
 
