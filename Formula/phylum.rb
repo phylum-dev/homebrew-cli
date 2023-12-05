@@ -14,6 +14,7 @@ class Phylum < Formula
   end
 
   depends_on "rust" => :build
+  depends_on "protobuf" => :build
 
   def install
     system "cargo", "install", "--no-default-features", *std_cargo_args(path: "cli")
