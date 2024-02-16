@@ -13,8 +13,21 @@ class Phylum < Formula
     sha256 cellar: :any_skip_relocation, monterey:      "78e13753bc3d9e931f1f01b9db89c20d14bd3beaec9aa18a6a5e7ecc8d4f9e14"
   end
 
+  deprecate! date: "2024-02-14",
+    because: <<~EOS
+      is available as `phylum-cli` in core tap!
+      To migrate:
+
+        brew uninstall phylum
+        brew untap phylum-dev/cli
+        brew install phylum-cli
+
+    EOS
+
   depends_on "rust" => :build
   depends_on "protobuf" => :build
+
+  conflicts_with "phylum-cli", because: "both install `phylum` binaries"
 
   def install
     system "cargo", "install", "--no-default-features", *std_cargo_args(path: "cli")
