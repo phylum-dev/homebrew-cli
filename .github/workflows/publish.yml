@@ -1,8 +1,10 @@
 name: Publish Bottles
 on:
   pull_request:
-    paths:
+    paths-ignore:
       - Formula/phylum.rb
+      - README.md
+      - .github/workflows/publish.yml
 
 jobs:
   build-bottles:
