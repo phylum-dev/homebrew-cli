@@ -1,11 +1,11 @@
 # Phylum CLI
 
-This repository contains **deprecated** [Homebrew] formulae for the [Phylum] [CLI].
+This repository contains **disabled** [Homebrew] formulae for the [Phylum] [CLI].
 
-> **NOTE:** The `phylum` formula in this custom homebrew tap has been deprecated
+> **NOTE:** The `phylum` formula in this custom homebrew tap has been disabled
 > now that the official Homebrew core tap includes a `phylum-cli` formula that
-> does the same thing. A future release of the Phylum CLI will result in the
-> formula from this custom tap being **disabled** and not possible to install.
+> does the same thing. The formula was disabled on 22 FEB 2024 to coincide with
+> the v6.1.2 release of the Phylum CLI and will no longer install.
 
 [Homebrew]: https://brew.sh/
 [Phylum]: https://phylum.io/
@@ -13,9 +13,9 @@ This repository contains **deprecated** [Homebrew] formulae for the [Phylum] [CL
 
 ## How do I migrate to the supported formula?
 
-It is strongly recommended to migrate to the `phylum-cli` formula found in the
-core Homebrew tap ASAP. If the Phylum CLI is already installed from this custom
-`phylum-dev/cli` tap, follow these steps to migrate:
+If the Phylum CLI is already installed from this custom `phylum-dev/cli` tap,
+follow these steps to migrate to the `phylum-cli` formula found in the core
+Homebrew tap:
 
 ```sh
 # Uninstall the current formula to prevent `phylum` binary conflicts
@@ -35,15 +35,6 @@ It is even easier if the Phylum CLI was never installed from this custom
 ```sh
 brew install phylum-cli
 ```
-
-## How do I install these formulae?
-
-> **NOTE:** These instructions are only included for historical purposes.
-> It is recommended to install the CLI from the core Homebrew tap instead.
-
-`brew install phylum-dev/cli/<formula>`
-
-Or `brew tap phylum-dev/cli` and then `brew install <formula>`.
 
 ## Documentation
 
